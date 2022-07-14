@@ -9,4 +9,9 @@ export async function signup(req: Request, res: Response) {
   res.sendStatus(201);
 }
 
-export async function signin(req: Request, res: Response) {}
+export async function signin(req: Request, res: Response) {
+  const { email, password } = req.body;
+
+  const user = await userService.login({ email, password });
+  res.send(user);
+}
