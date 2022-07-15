@@ -13,3 +13,11 @@ export async function getAll(req: Request, res: Response){
   const notes = await notesService.getAll(userId);
   res.send(notes);
 }
+
+export async function getById(req: Request, res: Response){
+  const notesId = Number(req.params.id);
+  const userId = Number(res.locals.user.id);
+
+  const note = await notesService.getById(notesId, userId);
+  res.send(note);
+}

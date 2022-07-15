@@ -19,3 +19,11 @@ export async function create(note: Notes) {
 export async function getAll(userId: number) {
   return notesRepository.getAll(userId);
 }
+
+export async function getById(notesId: number, userId: number) {
+  const notes = await notesRepository.getById(notesId);
+  if (!notes) throw { type: "NoteNotFound", message: "Note not found." };
+
+  checkUser(userId, notes.userId);
+  return notes;
+}

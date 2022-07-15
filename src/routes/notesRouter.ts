@@ -19,4 +19,9 @@ notesRouter.get('/notes',
   controller.getAll
 );
 
+notesRouter.get('/notes/:id',
+  middleware.validateJWT,
+  controller.getById
+);
+
 export default notesRouter;

@@ -27,3 +27,11 @@ export async function getAll(userId: number){
     },
   });
 }
+
+export async function getById(id: number){
+  return await prisma.notes.findFirst({
+    where: {
+      id,
+    },
+  });
+}
