@@ -31,3 +31,11 @@ export async function getWifi(wifiId: number) {
     }
   });
 }
+
+export async function deleteWifi(wifiId: number, userId: number) {
+  return prisma.wifi.delete({
+    where: {
+      id: wifiId,
+    }
+  });
+}

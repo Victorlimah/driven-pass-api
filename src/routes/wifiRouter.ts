@@ -23,6 +23,9 @@ wifiRouter.get('/wifi/:wifiId',
   controller.getWifi
 )
 
-wifiRouter.delete('/wifi');
+wifiRouter.delete('/wifi/:wifiId',
+  middleware.validateJWT,
+  controller.deleteWifi
+);
 
 export default wifiRouter;
