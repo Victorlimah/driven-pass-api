@@ -12,7 +12,7 @@ wifiRouter.post('/wifi',
   controller.create
 );
 
-wifiRouter.get('/wifi');
+wifiRouter.get('/wifi/:userId', controller.getWifisUser);
 
 wifiRouter.delete('/wifi');
 

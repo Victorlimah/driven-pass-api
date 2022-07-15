@@ -21,3 +21,11 @@ export function encryptPassword(password: string) {
 export function decryptPassword(password: string, encryptedPassword: string) {
   return bcrypt.compareSync(password, encryptedPassword);
 }
+
+export function decryptObjectsPass(array: any[]) {
+  return array.map(object => {
+    const { password } = object;
+    const decryptedPassword = decryptSecurityPass(password);
+    return { ...object, password: decryptedPassword };
+  });
+}

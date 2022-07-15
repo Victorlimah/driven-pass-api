@@ -15,3 +15,8 @@ export async function create(wifi: wifiData) {
   const hashedPassword = passUtils.encryptSecurityPass(wifi.password);
   await wifiRepository.create({ ...wifi, password: hashedPassword });
 }
+
+export async function getWifisUser(userId: number) {
+  const wifis =  await wifiRepository.getWifisUser(userId);
+  return passUtils.decryptObjectsPass(wifis);
+}

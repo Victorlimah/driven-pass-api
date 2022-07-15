@@ -10,8 +10,16 @@ export async function create(wifi: wifiData) {
 export async function searchByTitleAndUserId(title: string, userId: number) {
   return prisma.wifi.findFirst({
     where: {
-      title: title,
-      userId: userId
+      title,
+      userId
+    }
+  });
+}
+
+export async function getWifisUser(userId: number) {
+  return prisma.wifi.findMany({
+    where: {
+      userId
     }
   });
 }
