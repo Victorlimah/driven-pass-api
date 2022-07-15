@@ -16,3 +16,11 @@ export async function getWifisUser(req: Request, res: Response){
   const wifis = await wifiService.getWifisUser(userId);
   res.send(wifis);
 }
+
+export async function getWifi(req: Request, res: Response){
+  const wifiId = Number(req.params.wifiId);
+  const userId = Number(res.locals.user.id);
+
+  const wifi = await wifiService.getWifi(wifiId, userId);
+  res.send(wifi);
+}

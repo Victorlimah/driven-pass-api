@@ -13,10 +13,15 @@ wifiRouter.post('/wifi',
   controller.create
 );
 
-wifiRouter.get('/wifi/:userId',
+wifiRouter.get('/wifis/:userId',
   middleware.validateJWT,
   controller.getWifisUser
 );
+
+wifiRouter.get('/wifi/:wifiId',
+  middleware.validateJWT,
+  controller.getWifi
+)
 
 wifiRouter.delete('/wifi');
 

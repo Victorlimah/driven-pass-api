@@ -1,5 +1,6 @@
 import { Wifi } from "@prisma/client";
 
+import { checkUser } from "../utils/userUtils.js";
 import * as passUtils from "../utils/passUtils.js";
 import * as wifiRepository from "../repositories/wifiRepository.js";
 
@@ -19,4 +20,12 @@ export async function create(wifi: wifiData) {
 export async function getWifisUser(userId: number) {
   const wifis =  await wifiRepository.getWifisUser(userId);
   return passUtils.decryptObjectsPass(wifis);
+}
+
+export async function getWifi(wifiId: number, userId: number) {
+  const wifi = await wifiRepository.getWifi(wifiId);
+  if (!wifi)  throw { type: "NotFound", message: "Wifi not found." };
+
+  checkUser(wifi.userId, userId);
+  return passUtils.decryptObjectsPass([wifi]);
 }
