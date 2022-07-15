@@ -14,4 +14,9 @@ notesRouter.post('/notes',
   controller.create
 );
 
+notesRouter.get('/notes',
+  middleware.validateJWT,
+  controller.getAll
+);
+
 export default notesRouter;

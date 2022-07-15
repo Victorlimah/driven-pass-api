@@ -19,3 +19,11 @@ export async function create(note: notesData){
     },
   });
 }
+
+export async function getAll(userId: number){
+  return await prisma.notes.findMany({
+    where: {
+      userId,
+    },
+  });
+}
