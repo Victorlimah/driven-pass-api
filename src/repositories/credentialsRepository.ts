@@ -16,3 +16,27 @@ export async function create(credentials: credendialData) {
     data: credentials,
   });
 }
+
+export async function getCredentialsUser(userId: number) {
+  return prisma.wifi.findMany({
+    where: {
+      userId,
+    },
+  });
+}
+
+export async function getCredential(wifiId: number) {
+  return prisma.wifi.findFirst({
+    where: {
+      id: wifiId,
+    },
+  });
+}
+
+export async function deleteCredential(wifiId: number, userId: number) {
+  return prisma.wifi.delete({
+    where: {
+      id: wifiId,
+    },
+  });
+}

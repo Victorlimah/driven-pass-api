@@ -14,4 +14,19 @@ credentialsRouter.post('/credentials',
   controller.create 
 );
 
+credentialsRouter.get('/credentials',
+  middleware.validateJWT,
+  controller.getCredentialsUser
+);
+
+credentialsRouter.get('/credentials/:id',
+  middleware.validateJWT,
+  controller.getCredential
+);
+
+credentialsRouter.delete('/credentials/:id',
+  middleware.validateJWT,
+  controller.deleteCredential
+);
+
 export default credentialsRouter;

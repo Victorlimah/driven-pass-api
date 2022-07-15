@@ -1,6 +1,7 @@
 import { Credentials } from "@prisma/client";
 
-import * as passUtil from "../utils/passUtils.js";
+import { checkUser } from "../utils/userUtils.js";
+import * as passUtils from "../utils/passUtils.js";
 import * as repository from "../repositories/credentialsRepository.js";
 
 export type credendialData = Omit<Credentials, "id" | "createdAt" >
@@ -10,6 +11,32 @@ export async function create(credentials: credendialData, userId: number) {
   if (credential)
     throw { type: "CredentialAlreadyExists", message: "There is already a credential registered with this title."};
   
-  const hashedPassword = passUtil.encryptSecurityPass(credentials.password); 
+  const hashedPassword = passUtils.encryptSecurityPass(credentials.password); 
   return repository.create({ ...credentials, userId, password: hashedPassword });
+}
+
+export async function getCredentialsUser(userId: number) {
+  const credentials = await repository.getCredentialsUser(userId);
+  return passUtils.decryptObjectsPass(credentials);
+}
+
+export async function getCredential(credencialsId: number, userId: number) {
+  const credential = await returnObject(credencialsId);
+  checkUser(credential.userId, userId);
+
+  return passUtils.decryptObjectsPass([credential]);
+}
+
+export async function deleteCredential(credencialsId: number, userId: number) {
+  const credential = await returnObject(credencialsId);
+  checkUser(credential.userId, userId);
+
+  await repository.deleteCredential(credencialsId, userId);
+}
+
+async function returnObject(credencialsId: number) {
+  const credential = await repository.getCredential(credencialsId);
+  if (!credential) throw { type: "NotFound", message: "Credential not found." };
+
+  return credential;
 }
