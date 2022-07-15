@@ -24,4 +24,9 @@ notesRouter.get('/notes/:id',
   controller.getById
 );
 
+notesRouter.delete('/notes/:id',
+  middleware.validateJWT,
+  controller.deleteNote
+);
+
 export default notesRouter;

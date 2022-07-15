@@ -21,9 +21,22 @@ export async function getAll(userId: number) {
 }
 
 export async function getById(notesId: number, userId: number) {
+  const notes = await returnObject(notesId);
+
+  checkUser(userId, notes.userId);
+  return notes;
+}
+
+export async function deleteNote(notesId: number, userId: number) {
+  const notes = await returnObject(notesId);
+
+  checkUser(userId, notes.userId);
+  await notesRepository.deleteNote(notesId);
+}
+
+async function returnObject(notesId: number) {
   const notes = await notesRepository.getById(notesId);
   if (!notes) throw { type: "NoteNotFound", message: "Note not found." };
 
-  checkUser(userId, notes.userId);
   return notes;
 }

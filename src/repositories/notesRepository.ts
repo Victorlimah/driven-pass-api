@@ -35,3 +35,11 @@ export async function getById(id: number){
     },
   });
 }
+
+export async function deleteNote(id: number){
+  return await prisma.notes.delete({
+    where: {
+      id,
+    },
+  });
+}
