@@ -9,7 +9,7 @@ export type credendialData = Omit<Credentials, "id" | "createdAt" >
 export async function create(credentials: credendialData, userId: number) {
   const credential = await repository.searchByTitleAndUserId(credentials.title, userId);
   if (credential)
-    throw { type: "CredentialAlreadyExists", message: "There is already a credential registered with this title."};
+    throw { type: "conflict", message: "There is already a credential registered with this title."};
   
   const hashedPassword = passUtils.encryptSecurityPass(credentials.password); 
   return repository.create({ ...credentials, userId, password: hashedPassword });
@@ -31,7 +31,7 @@ export async function deleteCredential(credencialsId: number, userId: number) {
   const credential = await returnObject(credencialsId);
   checkUser(credential.userId, userId);
 
-  await repository.deleteCredential(credencialsId, userId);
+  await repository.deleteCredential(credencialsId);
 }
 
 async function returnObject(credencialsId: number) {
